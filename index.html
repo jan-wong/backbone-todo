@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>todo application</title>
+  <link rel="stylesheet" href="./src/assets/style.css">
 </head>
 <body>
 <div id="todo">
@@ -14,14 +15,12 @@
 <script src="./src/thirdparty/underscore.js"></script>
 <script src="./src/thirdparty/backbone.js"></script>
 <script src="./src/app.js"></script>
-<script type="text/template" id="todo-input">
-  <input type="text" class="todo-input">
+<script type="text/template" id="todo-list">
   <ul class="todo-list">
-
+    <% obj.forEach(function(data) { %>
+    <li class="todo-item"><%= data.label %></li>
+    <% }) %>
   </ul>
-</script>
-<script type="text/template" id="todo-item">
-  <li class="todo-item"></li>
 </script>
 </body>
 </html>

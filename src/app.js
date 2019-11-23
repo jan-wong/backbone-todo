@@ -1,33 +1,67 @@
-// const ItemView = Backbone.View.extend({
-//   el: '#todo-item',
+$(function(){
+  const InputView = Backbone.View.extend({
+    tagName: 'input',
+    className: 'todoo-input',
+    attributes: {
+      type: 'text'
+    },
+    events: {
+      'keydown': 'keyAction'
+    },
+    initialize() {
+      console.log(this)
+    },
+    keyAction(e) {
+      if (e.which === 13) this.trigger('enter', e)
+    }
+  })
 
-//   events: {
+  const listCollection = new Backbone.Collection([
+    { label: 'hello world' },
+    { label: 'hello pone' }
+  ])
 
-//   },
-
-//   initialize() {
-
-//   },
-
-//   render() {
-
-//     return this;
-//   }
-// })
-
-const AppView = Backbone.View.extend({
-  el: '#todo',
-
-  template: _.template($('#todo').html()),
-
-  initialize() {
-    // console.log(this);
-  },
+  const ListView = Backbone.View.extend({
+    model: listCollection,
   
-  render() {
-    console.log(this.$el);
-    return this;
-  }
-})
+    template: _.template($('#todo-list').html()),
+  
+    initialize() {
+      this.render()
+      this.model.on('update', _ => this.render())
+    },
+  
+    render() {
+      this.$el.html(this.template(this.model.toJSON()))
+      return this
+    },
 
-new AppView();
+    addItem(label) {
+      this.model.add({
+        label: label
+      })
+    }
+  })
+  
+  const AppView = Backbone.View.extend({
+    el: '#todo',
+  
+    initialize() {
+      this.inputView = new InputView()
+      this.listView = new ListView()
+
+      this.$el.append(this.inputView.$el)
+      this.$el.append(this.listView.$el)
+
+      this.inputView.on('enter', e => {
+       this.listView.addItem(e.target.value)
+      })
+    },
+    
+    render() {
+      return this;
+    }
+  })
+  
+  new AppView();
+})
