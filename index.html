@@ -14,17 +14,18 @@
 <script src="./src/thirdparty/jquery.js"></script>
 <script src="./src/thirdparty/underscore.js"></script>
 <script src="./src/thirdparty/backbone.js"></script>
+<script>
+// _.templateSettings = {
+//   interpolate: /\{\{(.+?)\}\}/g
+// };
+</script>
 <script src="./src/app.js"></script>
 <script type="text/template" id="todo-list">
   <ul class="todo-list">
     <% obj.forEach(function(data) { %>
     <li class="todo-item <%= data.checked ? 'checked': ''  %>">
       <label class="todo-item_label">
-        <% if (data.checked) { %>
-        <input type="checkbox" class="todo-item_checkbox" checked />
-        <% } else { %>
-        <input type="checkbox" class="todo-item_checkbox" />
-        <% } %>
+        <input type="checkbox" class="todo-item_checkbox" <%= data.checked ? 'checked': '' %> />
         <span class="todo-item_text"><%= data.label %></span>
       </label>
       <span class="todo-item_del">删除</span>
